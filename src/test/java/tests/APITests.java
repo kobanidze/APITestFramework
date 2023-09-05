@@ -18,6 +18,7 @@ public class APITests {
         Response response = APIUtils.sendGetRequest(BASE_URL + "/api/users/21178");
         APIUtils.validateJsonSchema(response, "getService.json");
     }
+
     @Test
     @DisplayName("post-запрос")
     @Description("Тут описание теста")
@@ -27,12 +28,13 @@ public class APITests {
         data.put("first_name", "Sam");
         data.put("last_name", "Watson");
         data.put("company_id", 3);
-        id = APIUtils.sendPostRequest(BASE_URL + "/api/users/", data )
+        id = APIUtils.sendPostRequest(BASE_URL + "/api/users/", data)
                 .then().statusCode(201).extract()
                 .jsonPath().getInt("user_id");
     }
+
     @Test
-    public void testPutReq(){
+    public void testPutReq() {
         HashMap data = new HashMap();
         data.put("first_name", "Samuel");
         data.put("last_name", "Jackson");
@@ -45,10 +47,11 @@ public class APITests {
         APIUtils.validateJsonSchema(response, "getService.json");
 
     }
+
     @Test
-    public void testDeleteReq(){
-        id=20835;
-        APIUtils.sendDeleteRequest(BASE_URL + "/api/users/"+id)
+    public void testDeleteReq() {
+        id = 20835;
+        APIUtils.sendDeleteRequest(BASE_URL + "/api/users/" + id)
                 .then().statusCode(202).log().all();
     }
 
