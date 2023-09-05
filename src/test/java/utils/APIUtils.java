@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class APIUtils {
     public static Response sendGetRequest(String endpoint) {
@@ -31,5 +32,10 @@ public class APIUtils {
         return given()
                 .when()
                 .delete(endpoint);
+    }
+
+    public static void validateJsonSchema(Response response, String pathToSchema){
+             response.then().assertThat()
+                .body(matchesJsonSchemaInClasspath(pathToSchema));
     }
 }

@@ -1,8 +1,8 @@
 package tests;
 
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import utils.APIUtils;
-
 import java.util.HashMap;
 
 public class APITests {
@@ -12,7 +12,8 @@ public class APITests {
 
     @Test
     public void testGetReq(){
-        APIUtils.sendGetRequest(BASE_URL + "/api/companies/");
+        Response response = APIUtils.sendGetRequest(BASE_URL + "/api/users/21178");
+        APIUtils.validateJsonSchema(response, "getService.json");
     }
     @Test
     public void testPostReq(){
@@ -23,7 +24,6 @@ public class APITests {
         id = APIUtils.sendPostRequest(BASE_URL + "/api/users/", data )
                 .then().statusCode(201).extract()
                 .jsonPath().getInt("user_id");
-        System.out.println(id);
     }
     @Test
     public void testPutReq(){
@@ -31,11 +31,13 @@ public class APITests {
         data.put("first_name", "Samuel");
         data.put("last_name", "Jackson");
         data.put("company_id", 3);
-        id=20835;
+        id=21037;
         String uri = BASE_URL + "/api/users/"+id;
-        APIUtils.sendPutRequest(uri,data)
-                .then().statusCode(200);
-        System.out.println(uri);
+        Response response = APIUtils.sendPutRequest(uri,data);
+        response.then().statusCode(200);
+        System.out.println(this.getClass().getResource("/").getPath());
+        APIUtils.validateJsonSchema(response, "getService.json");
+
     }
     @Test
     public void testDeleteReq(){
