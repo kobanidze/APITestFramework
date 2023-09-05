@@ -8,4 +8,7 @@ public class APIConfig {
     static {
         RestAssured.baseURI = BASE_URL;
     }
+
+    public static final String DEFAULT_LOGIN = "Nya";
+    public static final String DEFAULT_PASSWORD = "qwerty12345";
 }

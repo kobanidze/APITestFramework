@@ -1,47 +1,66 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import utils.APIUtils;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
+import static config.APIConfig.*;
+
+@TestMethodOrder(OrderAnnotation.class)
 public class APITests {
-    String BASE_URL = "https://send-request.me";
-    int id;
+    private static int id;
+    static APIUtils apiUtils;
+
+    @BeforeAll
+    public static void initAPI() {
+        apiUtils = new APIUtils(BASE_URL, DEFAULT_LOGIN, DEFAULT_PASSWORD);
+    }
 
 
     @Test
+    @Order(1)
     public void testGetReq(){
-        APIUtils.sendGetRequest(BASE_URL + "/api/companies/");
+        apiUtils.sendGetRequest("api/companies/");
     }
     @Test
+    @Order(2)
     public void testPostReq(){
         HashMap data = new HashMap();
         data.put("first_name", "Sam");
         data.put("last_name", "Watson");
         data.put("company_id", 3);
-        id = APIUtils.sendPostRequest(BASE_URL + "/api/users/", data )
+        this.id = apiUtils.sendPostRequest( "api/users/", data)
                 .then().statusCode(201).extract()
                 .jsonPath().getInt("user_id");
         System.out.println(id);
     }
     @Test
+    @Order(3)
     public void testPutReq(){
         HashMap data = new HashMap();
         data.put("first_name", "Samuel");
         data.put("last_name", "Jackson");
         data.put("company_id", 3);
-        id=20835;
-        String uri = BASE_URL + "/api/users/"+id;
-        APIUtils.sendPutRequest(uri,data)
+        String uri = "api/users/" + id;
+        apiUtils.sendPutRequest(uri,data)
                 .then().statusCode(200);
         System.out.println(uri);
     }
     @Test
+    @Order(4)
     public void testDeleteReq(){
-        id=20835;
-        APIUtils.sendDeleteRequest(BASE_URL + "/api/users/"+id)
-                .then().statusCode(202).log().all();
+        apiUtils.sendDeleteRequest("api/users/" + id)
+                .then()
+                .statusCode(202)
+                .log()
+                .all();
     }
+
 
 }
