@@ -1,5 +1,8 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.DisplayName;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import utils.APIUtils;
@@ -16,7 +19,10 @@ public class APITests {
         APIUtils.validateJsonSchema(response, "getService.json");
     }
     @Test
-    public void testPostReq(){
+    @DisplayName("post-запрос")
+    @Description("Тут описание теста")
+    @Step("Проверка отправки пост запроса")
+    public void testPostReq() {
         HashMap data = new HashMap();
         data.put("first_name", "Sam");
         data.put("last_name", "Watson");
