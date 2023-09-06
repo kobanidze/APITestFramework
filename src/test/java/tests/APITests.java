@@ -6,11 +6,9 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
-import static config.APIConfig.*;
+import static org.example.config.APIConfig.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class APITests {
@@ -57,9 +55,17 @@ public class APITests {
     public void testDeleteReq(){
         apiUtils.sendDeleteRequest("api/users/" + id)
                 .then()
-                .statusCode(202)
+                .statusCode(200)
                 .log()
                 .all();
+    }
+
+    @Test
+    @Order(5)
+    public void testAuthReq(){
+        apiUtils.sendGetRequestWithAuth("api/auth/me")
+                .then()
+                .statusCode(200);
     }
 
 

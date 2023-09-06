@@ -1,4 +1,4 @@
-package config;
+package org.example.config;
 
 import io.restassured.RestAssured;
 
