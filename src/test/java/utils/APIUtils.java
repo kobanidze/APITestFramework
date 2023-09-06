@@ -1,5 +1,7 @@
 package utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -27,40 +29,46 @@ public class APIUtils {
                 .getString("token");
     }
 
-    RequestSpecification prepareRequest(
-            HashMap data, HashMap<String, Object> headers, boolean withToken, String contentType
-    ) {
+    RequestSpecification prepareRequest(Parameters parameter) {
         RequestSpecification request = given();
-        if (contentType != null) request = request.contentType(contentType);
-        if (withToken) request.header("x-token", authToken);
-        if (headers != null) {
-            for (Map.Entry<String, Object> entry : headers.entrySet()) {
-                request.header(entry.getKey(), entry.getValue());
+        if (parameter.isSet("contentType")) request = request.contentType(parameter.get("contentType", String.class));
+        if (parameter.get("withToken", Boolean.class)) request.header("x-token", authToken);
+        if (parameter.isSet("headers")) {
+            Map<String, Object> headers = parameter.get("headers", Map.class);
+            for (String key : headers.keySet()) {
+                request.header(key, headers.get(key));
             }
         }
-        if (data != null) request.body(data);
+        if (parameter.isSet("data")) request.body(parameter.get("data"));
         return request;
     }
 
 
     public Response sendGetRequest(String endpoint) {
-        return prepareRequest(null, null, false, null).get(baseUrl + endpoint);
+        return prepareRequest(new Parameters(new HashMap<>()))
+                .get(baseUrl + endpoint);
     }
 
     public Response sendGetRequestWithAuth(String endpoint) {
-        return prepareRequest(null, null, true, null).get(baseUrl + endpoint);
+        return prepareRequest(new Parameters(Map.of("withToken", true))).get(baseUrl + endpoint);
     }
 
     public Response sendPostRequest(String endpoint, HashMap data) {
-        return prepareRequest(data, null, false, "application/json").post(baseUrl + endpoint);
+        return prepareRequest(new Parameters(Map.of(
+                "data", data,
+                "contentType", "application/json")))
+                .post(baseUrl + endpoint);
     }
 
     public Response sendPutRequest(String endpoint, HashMap data) {
-        return prepareRequest(data, null, false, "application/json").get(baseUrl + endpoint);
+        return prepareRequest(new Parameters(Map.of(
+                "data", data,
+                "contentType", "application/json")))
+                .put(baseUrl + endpoint);
     }
 
     public Response sendDeleteRequest(String endpoint) {
-        return prepareRequest(null, null, false, null).get(baseUrl + endpoint);
+        return prepareRequest(new Parameters(new HashMap<>()))
+                .delete(baseUrl + endpoint);
     }
-
 }
