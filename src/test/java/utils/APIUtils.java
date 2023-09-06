@@ -32,7 +32,7 @@ public class APIUtils {
     RequestSpecification prepareRequest(Parameters parameter) {
         RequestSpecification request = given();
         if (parameter.isSet("contentType")) request = request.contentType(parameter.get("contentType", String.class));
-        if (parameter.get("withToken", Boolean.class)) request.header("x-token", authToken);
+        if (((Boolean) true).equals(parameter.get("withToken"))) request.header("x-token", authToken);
         if (parameter.isSet("headers")) {
             Map<String, Object> headers = parameter.get("headers", Map.class);
             for (String key : headers.keySet()) {

@@ -55,7 +55,7 @@ public class APITests {
     public void testDeleteReq(){
         apiUtils.sendDeleteRequest("api/users/" + id)
                 .then()
-                .statusCode(200)
+                .statusCode(202)
                 .log()
                 .all();
     }
