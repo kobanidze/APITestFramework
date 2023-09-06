@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>my-api-testing-framework</artifactId>
+    <groupId>otpbank</groupId>
+    <artifactId>apiTestingFramework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -21,13 +22,11 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.3.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>3.3.0</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- JUnit 5 -->
@@ -35,14 +34,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.10.0</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.0</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Log4j -->
@@ -73,7 +70,6 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-surefire-provider</artifactId>
             <version>1.2.0</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Allure -->
@@ -81,7 +77,6 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>2.13.9</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -95,7 +90,6 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
             <version>2.18.1</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- JSON Schema -->

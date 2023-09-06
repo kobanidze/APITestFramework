@@ -2,9 +2,7 @@ package utils;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
-
 import java.util.HashMap;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
