@@ -12,7 +12,9 @@ import static io.restassured.RestAssured.given;
 
 public class APIUtils {
 
+    /**Базовый URL*/
     String baseUrl;
+    /**Токен аунтефикации*/
     String authToken;
 
     public APIUtils(String base, String login, String password) {
@@ -31,15 +33,15 @@ public class APIUtils {
 
     RequestSpecification prepareRequest(Parameters parameter) {
         RequestSpecification request = given();
-        if (parameter.isSet("contentType")) request = request.contentType(parameter.get("contentType", String.class));
-        if (((Boolean) true).equals(parameter.get("withToken"))) request.header("x-token", authToken);
-        if (parameter.isSet("headers")) {
-            Map<String, Object> headers = parameter.get("headers", Map.class);
+        if (parameter.isSet(Options.CONTENT_TYPE)) request = request.contentType(parameter.get(Options.CONTENT_TYPE, String.class));
+        if (((Boolean) true).equals(parameter.get(Options.WITH_TOKEN))) request.header("x-token", authToken);
+        if (parameter.isSet(Options.HEADERS)) {
+            Map<String, Object> headers = parameter.get(Options.HEADERS, Map.class);
             for (String key : headers.keySet()) {
                 request.header(key, headers.get(key));
             }
         }
-        if (parameter.isSet("data")) request.body(parameter.get("data"));
+        if (parameter.isSet(Options.DATA)) request.body(parameter.get(Options.DATA));
         return request;
     }
 
@@ -50,20 +52,20 @@ public class APIUtils {
     }
 
     public Response sendGetRequestWithAuth(String endpoint) {
-        return prepareRequest(new Parameters(Map.of("withToken", true))).get(baseUrl + endpoint);
+        return prepareRequest(new Parameters(Map.of(Options.WITH_TOKEN, true))).get(baseUrl + endpoint);
     }
 
     public Response sendPostRequest(String endpoint, HashMap data) {
         return prepareRequest(new Parameters(Map.of(
-                "data", data,
-                "contentType", "application/json")))
+                Options.DATA, data,
+                Options.CONTENT_TYPE, "application/json")))
                 .post(baseUrl + endpoint);
     }
 
     public Response sendPutRequest(String endpoint, HashMap data) {
         return prepareRequest(new Parameters(Map.of(
-                "data", data,
-                "contentType", "application/json")))
+                Options.DATA, data,
+                Options.CONTENT_TYPE, "application/json")))
                 .put(baseUrl + endpoint);
     }
 
