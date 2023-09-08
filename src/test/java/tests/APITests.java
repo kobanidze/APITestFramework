@@ -1,19 +1,20 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import utils.APIUtils;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.HashMap;
 
-import static org.example.config.APIConfig.*;
+import static config.APIConfig.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class APITests {
     private static int id;
     static APIUtils apiUtils;
+
 
     @BeforeAll
     public static void initAPI() {
@@ -28,6 +29,9 @@ public class APITests {
     }
     @Test
     @Order(2)
+    @DisplayName("post-запрос")
+    @Description("Тут описание теста")
+    @Step("Проверка отправки пост запроса")
     public void testPostReq(){
         HashMap data = new HashMap();
         data.put("first_name", "Sam");
@@ -36,8 +40,8 @@ public class APITests {
         this.id = apiUtils.sendPostRequest( "api/users/", data)
                 .then().statusCode(201).extract()
                 .jsonPath().getInt("user_id");
-        System.out.println(id);
     }
+
     @Test
     @Order(3)
     public void testPutReq(){
@@ -50,6 +54,7 @@ public class APITests {
                 .then().statusCode(200);
         System.out.println(uri);
     }
+
     @Test
     @Order(4)
     public void testDeleteReq(){

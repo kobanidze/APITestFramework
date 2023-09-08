@@ -1,5 +1,6 @@
 package utils;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class APIUtils {
 
@@ -30,7 +32,9 @@ public class APIUtils {
     }
 
     RequestSpecification prepareRequest(Parameters parameter) {
-        RequestSpecification request = given();
+        RequestSpecification request =
+                given()
+                    .filter(new AllureRestAssured());
         if (parameter.isSet(Options.CONTENT_TYPE)) request = request.contentType(parameter.get(Options.CONTENT_TYPE, String.class));
         if (((Boolean) true).equals(parameter.get(Options.WITH_TOKEN))) request.header("x-token", authToken);
         if (parameter.isSet(Options.HEADERS)) {
@@ -69,5 +73,10 @@ public class APIUtils {
     public Response sendDeleteRequest(String endpoint) {
         return prepareRequest(new Parameters(new HashMap<>()))
                 .delete(baseUrl + endpoint);
+    }
+
+    public static void validateJsonSchema(Response response, String pathToSchema){
+        response.then().assertThat()
+                .body(matchesJsonSchemaInClasspath(pathToSchema));
     }
 }
