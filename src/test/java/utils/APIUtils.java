@@ -1,7 +1,5 @@
 package utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -47,8 +45,7 @@ public class APIUtils {
 
 
     public Response sendGetRequest(String endpoint) {
-        return prepareRequest(new Parameters(new HashMap<>()))
-                .get(baseUrl + endpoint);
+        return prepareRequest(new Parameters()).get(baseUrl + endpoint);
     }
 
     public Response sendGetRequestWithAuth(String endpoint) {

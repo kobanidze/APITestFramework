@@ -1,11 +1,16 @@
 package utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Parameters {
     private final Map<Options, Object> properties;
     public Parameters(Map<Options, Object> properties) {
         this.properties = properties;
+    }
+
+    public Parameters() {
+        this.properties = new HashMap<>();
     }
 
     public void set(Options key, Object value) {
