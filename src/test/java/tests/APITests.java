@@ -52,7 +52,6 @@ public class APITests {
         String uri = "api/users/" + id;
         apiUtils.sendPutRequest(uri,data)
                 .then().statusCode(200);
-        System.out.println(uri);
     }
 
     @Test

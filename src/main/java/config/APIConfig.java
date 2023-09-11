@@ -9,6 +9,8 @@ public class APIConfig {
         RestAssured.baseURI = BASE_URL;
     }
 
+    public static final String kubeConfigPath1 = "допустим тут лежит путь к конфигу";
+
     public static final String DEFAULT_LOGIN = "Nya";
     public static final String DEFAULT_PASSWORD = "qwerty12345";
 }
